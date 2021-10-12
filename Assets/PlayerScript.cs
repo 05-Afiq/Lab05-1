@@ -13,16 +13,18 @@ public class PlayerScript : MonoBehaviour
     public float timeLeft;
     public int timeRemaining;
     public Text TimerText;
-    private float TimerValue;
+    private float TimerValue = 20;
+    [SerializeField] ParticleSystem collectParticle = null;
     // Start is called before the first frame update
     void Start()
     {
-        
+   
     }
 
     // Update is called once per frame
     void Update()
     {
+
         timeLeft -= Time.deltaTime;
         timeRemaining = Mathf.FloorToInt(timeLeft % 60);
         TimerText.text = "Timer : " + timeRemaining.ToString();
@@ -45,11 +47,18 @@ public class PlayerScript : MonoBehaviour
             Destroy(other.gameObject);
             CoinCount += 10;
             Coin.text = "Coin: $" + CoinCount;
+            collectParticle.Play();
+            StartCoroutine(stopSparkles());
 
         }
         if (other.gameObject.tag == "Enviroment")
         {
             SceneManager.LoadScene("GameLOseScene");
         }
+    }
+    IEnumerator stopSparkles()
+    {
+        yield return new WaitForSeconds(5f);
+        collectParticle.Stop();
     }
 }
