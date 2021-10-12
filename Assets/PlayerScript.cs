@@ -9,7 +9,11 @@ public class PlayerScript : MonoBehaviour
 
     public Text Coin;
     public int CoinCount = 0;
-
+    public float totalcoins;
+    public float timeLeft;
+    public int timeRemaining;
+    public Text TimerText;
+    private float TimerValue;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +23,20 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        timeLeft -= Time.deltaTime;
+        timeRemaining = Mathf.FloorToInt(timeLeft % 60);
+        TimerText.text = "Timer : " + timeRemaining.ToString();
+        if(CoinCount==totalcoins)
+        {
+            if(timeLeft<=TimerValue)
+            {
+                SceneManager.LoadScene("GameWinScene");
+            }
+        }
+        else if(timeLeft<=0)
+        {
+            SceneManager.LoadScene("GameLoseScene");
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
