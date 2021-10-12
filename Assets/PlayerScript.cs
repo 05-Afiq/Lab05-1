@@ -13,7 +13,7 @@ public class PlayerScript : MonoBehaviour
     public float timeLeft;
     public int timeRemaining;
     public Text TimerText;
-    private float TimerValue = 20;
+    private float TimerValue = 0;
     [SerializeField] ParticleSystem collectParticle = null;
     // Start is called before the first frame update
     void Start()
